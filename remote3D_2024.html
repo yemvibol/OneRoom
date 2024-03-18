@@ -353,7 +353,7 @@
               audioStream.getAudioTracks().forEach(track => localStream.addTrack(track));
               videoStream.getVideoTracks().forEach(track => localStream.addTrack(track));
               // ここで合成したストリームを利用する
-              //console.log(localStream.getAudioTracks()[0].label);
+              console.log(localStream.id);
               localStream.getAudioTracks()[0].enabled = false;
               sendrecv1.connect(localStream);
               remoteVideoTracks[localStream.id]=localStream;
