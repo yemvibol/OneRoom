@@ -205,9 +205,9 @@
         });
 
           function addVideo(conn){
-            if(conn.connection_id == sendrecv1.connectionId){
-              return;
-            }
+            //if(conn.connection_id == sendrecv1.connectionId){
+            //  return;
+            //}
             
             const stream = remoteVideoTracks[conn.connection_id];
             if(!stream){
@@ -265,8 +265,8 @@
 			          sideOrientation: BABYLON.Mesh.DOUBLESIDE
 	            };
               streamSpheres[stream_id] = BABYLON.MeshBuilder.CreatePlane("plane", planeOpts, scene);
-              streamSpheres[stream_id].position = new BABYLON.Vector3(0.0, 0.0, 0.0);
-              streamSpheres[stream_id].rotation = new BABYLON.Vector3(0.0, 0.0, 0.0);
+              streamSpheres[stream_id].position = screen_position;
+              streamSpheres[stream_id].rotation = screen_rotation;
               vScale = -1;
               matAlpha = 1.0;              
             }
@@ -472,7 +472,7 @@
             }
 
             label.text = transText; //ローカルの翻訳字幕に反映
-            //console.log(transText);
+            console.log(transText);
 
           }
           //sphere.getAbsolutePosition.z = 0;
