@@ -188,7 +188,7 @@
         sendrecv1.on('track', (event) => {//
           const stream = event.streams[0];
           remoteVideoTracks[stream.id]=stream;
-          
+          console.log('on track my streamID:', stream.id);
         });
 
         sendrecv1.on('notify', (event) => {
@@ -205,9 +205,9 @@
         });
 
           function addVideo(conn){
-            //if(conn.connection_id == sendrecv1.connectionId){
-            //  return;
-            //}
+            if(conn.connection_id == sendrecv1.connectionId){
+              return;
+            }
             
             const stream = remoteVideoTracks[conn.connection_id];
             if(!stream){
@@ -356,7 +356,7 @@
               //console.log(localStream.id);
               localStream.getAudioTracks()[0].enabled = false;
               sendrecv1.connect(localStream);
-              remoteVideoTracks[sendrecv1.connectionId]=localStream;
+              console.log('My connection id:', sendrecv1.connectionId);
               if(getUserMediaMock.state.isDummy){  //ダミー映像を流しているなら
                 isDummyMovie = true;
               }
