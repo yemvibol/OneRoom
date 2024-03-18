@@ -188,7 +188,7 @@
         sendrecv1.on('track', (event) => {//
           const stream = event.streams[0];
           remoteVideoTracks[stream.id]=stream;
-          console.log('on track my streamID:', stream.id);
+          console.log('on track connect to partner id:', stream.id);
         });
 
         sendrecv1.on('notify', (event) => {
