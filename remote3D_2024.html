@@ -353,10 +353,10 @@
               audioStream.getAudioTracks().forEach(track => localStream.addTrack(track));
               videoStream.getVideoTracks().forEach(track => localStream.addTrack(track));
               // ここで合成したストリームを利用する
-              console.log(localStream.id);
+              console.log(localStream[0].id);
               localStream.getAudioTracks()[0].enabled = false;
               sendrecv1.connect(localStream);
-              remoteVideoTracks[localStream.id]=localStream;
+              remoteVideoTracks[sendrecv1.connectionId]=localStream;
               if(getUserMediaMock.state.isDummy){  //ダミー映像を流しているなら
                 isDummyMovie = true;
               }
