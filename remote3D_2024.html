@@ -206,9 +206,10 @@
 
           function addVideo(conn){
             if(conn.connection_id == sendrecv1.connectionId){
+              console.log('notify my own id: ', sendrecv1.connectionId)
               return;
             }
-            
+            console.log('notify partner id: ', conn.connection_id)
             const stream = remoteVideoTracks[conn.connection_id];
             if(!stream){
               console.error('notify', 'stream not found', conn.connection_id);
