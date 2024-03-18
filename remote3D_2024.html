@@ -373,7 +373,7 @@
         
 
         document.querySelector('#stop-sendrecv1').addEventListener('click', async () => {//退室
-          messageOpen = false;
+          NumberOfPartner = 0;
           await sendrecv1.disconnect();
           document.querySelector('#stream-videos').srcObject = null;
           document.querySelector('#stream-videos').innerHTML = null;
@@ -436,7 +436,7 @@
         
         //****************************** LOOP EVERY FRAME *********************************
         scene.onBeforeRenderObservable.add(() => { // Runs every frame
-          if(messageOpen){
+          if(NumberOfPartner > 0){
             if(true){
               //console.log(sendrecv1.connectionId);
               var value = "";
