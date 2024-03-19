@@ -337,8 +337,6 @@
         document.querySelector('#start-sendrecv1').addEventListener('click', async () => {//入室
           // sendrecv1
           let audioStream, videoStream; // 音声とビデオのストリーム
-
-          
           navigator.mediaDevices.getUserMedia({ audio: {echoCancellation: false, noiseSuppression: true}})
             .then(function(stream) {
               audioStream = stream; // 音声ストリームを取得
@@ -357,7 +355,7 @@
               //console.log(localStream.id);
               localStream.getAudioTracks()[0].enabled = false;
               sendrecv1.connect(localStream);
-              //console.log('My connection id:', sendrecv1.connectionId);
+              addStreamVideo(sendrecv1.connectionId, localStream, clientId);
               if(getUserMediaMock.state.isDummy){  //ダミー映像を流しているなら
                 isDummyMovie = true;
               }
@@ -376,7 +374,7 @@
           await sendrecv1.disconnect();
           document.querySelector('#stream-videos').srcObject = null;
           document.querySelector('#stream-videos').innerHTML = null;
-          removeStreamVideo(sendrecv1.connectionId);
+          removeStreamVideo(sendrecv1.connectionId, clientId);//remove local stream
           for (let id in streamSpheres){
             //console.log(id);
             streamSpheres[id].dispose();
