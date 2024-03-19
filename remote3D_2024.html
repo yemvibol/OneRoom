@@ -221,8 +221,8 @@
             } else {
               //if(conn.client_id == 'THISISREMOTE') return;//remote partner
               addStreamVideo(conn.connection_id, stream, conn.client_id);//local partner
-              NumberOfPartner += 1;
-              console.log("Number of partner: ", NumberOfPartner);
+              //NumberOfPartner += 1;
+              //console.log("Number of partner: ", NumberOfPartner);
               lastAlpha = 1000;//camera.alpha; to send view angle to LOCAL
             }
           }
@@ -240,9 +240,9 @@
               shareScreenID = '';
             } else {
               removeStreamVideo(conn.connection_id);
-              NumberOfPartner -= 1;
+              //NumberOfPartner -= 1;
               console.log('remove partner id:', conn.connection_id);
-              console.log("Number of partner: ", NumberOfPartner);
+              //console.log("Number of partner: ", NumberOfPartner);
             }
             delete remoteVideoTracks[conn.connection_id];
           }
@@ -326,6 +326,16 @@
         
         function removeStreamVideo(stream_id){  //ローカル切断時処理
           const remoteVideo = document.querySelector('#stream-video-' + stream_id);
+          
+          for (let id in streamSpheres){
+            console.log('sphere id: ', id);
+            //streamSpheres[id].dispose();
+            //delete streamSpheres[id];
+          }
+          for (let id in remoteVideoTracks){
+            //delete remoteVideoTracks[id];
+          }
+          console.log('video childe id: ', remoteVideo)
           if (remoteVideo) {
             document.querySelector('#stream-videos').removeChild(remoteVideo);
             //scene.removeMesh(streamSpheres[stream_id]);
@@ -440,40 +450,39 @@
         
         //****************************** LOOP EVERY FRAME *********************************
         scene.onBeforeRenderObservable.add(() => { // Runs every frame
-          if(NumberOfPartner > 0){
-            if(true){
-              //console.log(sendrecv1.connectionId);
-              var value = "";
-              if(xrHelper.baseExperience.state == BABYLON.WebXRState.NOT_IN_XR){
-                //console.log("Not IN XR");
-                var angVal = camera.alpha + Math.PI/2;
-                //console.log(angVal);
-                if(!isDummyMovie){
-                  value = sendrecv1.connectionId+',' + angVal + "," +"notXR";
-                }
-                else{
-                  value = sendrecv1.connectionId+',' + angVal + "," +"XR";  //ダミー映像を流している時はアバター表示するようにデータ送信
-                }
-                
+          if(sendrecv1.connectionId != null){
+            //console.log(sendrecv1.connectionId);
+            var value = "";
+            if(xrHelper.baseExperience.state == BABYLON.WebXRState.NOT_IN_XR){
+              //console.log("Not IN XR");
+              var angVal = camera.alpha + Math.PI/2;
+              //console.log(angVal);
+              if(!isDummyMovie){
+                value = sendrecv1.connectionId+',' + angVal + "," +"notXR";
               }
               else{
-                console.log("IN XR");
-                //var dir = camera.getDirection(BABYLON.Vector3.Forward());
-                let q = xrHelper.baseExperience.camera.rotationQuaternion;
-                var HMD_ang = 0;
-                HMD_ang = q.y * Math.PI;
-                console.log(HMD_ang);
-                value = sendrecv1.connectionId + "," + HMD_ang + "," +"XR";
+                value = sendrecv1.connectionId+',' + angVal + "," +"XR";  //ダミー映像を流している時はアバター表示するようにデータ送信
               }
-              //console.log(value);
-              try{
-                sendrecv1.sendMessage('#example', new TextEncoder().encode(value));
-                lastAlpha = camera.alpha;
-              }catch(error){
-
-              }
+                
+            }
+            else{
+              console.log("IN XR");
+              //var dir = camera.getDirection(BABYLON.Vector3.Forward());
+              let q = xrHelper.baseExperience.camera.rotationQuaternion;
+              var HMD_ang = 0;
+              HMD_ang = q.y * Math.PI;
+              console.log(HMD_ang);
+              value = sendrecv1.connectionId + "," + HMD_ang + "," +"XR";
+            }
+            //console.log(value);
+            try{
+              sendrecv1.sendMessage('#example', new TextEncoder().encode(value));
+              lastAlpha = camera.alpha;
+            }catch(error){
 
             }
+
+            
 
             label.text = transText; //ローカルの翻訳字幕に反映
             //console.log(transText);
