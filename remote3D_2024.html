@@ -168,7 +168,6 @@
         // *** VARIABLES ***
         var streamSpheres = {};
         var cameraData = {};
-        var NumberOfPartner = 0;
         var lastAlpha = 1000;//camera.alpha;
         var shareScreenID = '';
         var screen_position = new BABYLON.Vector3(0.0, cameraTarget.y + 5.0, 10.0);
@@ -221,8 +220,6 @@
             } else {
               //if(conn.client_id == 'THISISREMOTE') return;//remote partner
               addStreamVideo(conn.connection_id, stream, conn.client_id);//local partner
-              //NumberOfPartner += 1;
-              //console.log("Number of partner: ", NumberOfPartner);
               lastAlpha = 1000;//camera.alpha; to send view angle to LOCAL
             }
           }
@@ -240,9 +237,7 @@
               shareScreenID = '';
             } else {
               removeStreamVideo(conn.connection_id);
-              //NumberOfPartner -= 1;
               console.log('remove partner id:', conn.connection_id);
-              //console.log("Number of partner: ", NumberOfPartner);
             }
             delete remoteVideoTracks[conn.connection_id];
           }
@@ -292,7 +287,7 @@
             if (!remoteVideos.querySelector('#' + remoteVideoId)) {
               const remoteVideo = document.createElement('video');
               remoteVideo.id = remoteVideoId;
-              console.log('create child id: ', remoteVideo.id);
+              //console.log('create child id: ', remoteVideo.id);
               remoteVideo.style.border = '1px solid red';
               remoteVideo.autoplay = true;
               remoteVideo.playsinline = true;
@@ -327,25 +322,16 @@
           }
         
         function removeStreamVideo(stream_id, streamType){  //ローカル切断時処理
-          const remoteVideo = document.querySelector('#stream-video-' + stream_id);
-          console.log(document.querySelector('#stream-videos').children)
-          for (let id in streamSpheres){
-            console.log('sphere id: ', id);
-            //streamSpheres[id].dispose();
-            //delete streamSpheres[id];
-            
-          }
-          for (let id in remoteVideoTracks){
-            //delete remoteVideoTracks[id];
-            console.log('stream id: ', id);
-          }
-          console.log('video child id: ', remoteVideo)
+          const remoteVideo = document.querySelector('#stream-video-' + stream_id + streamType);
+          //console.log(document.querySelector('#stream-videos').children)
+          //console.log('video child id: ', remoteVideo)
+          
           if (remoteVideo) {
             document.querySelector('#stream-videos').removeChild(remoteVideo);
             //scene.removeMesh(streamSpheres[stream_id]);
-            streamSpheres[stream_id].dispose();
-            delete streamSpheres[stream_id];
-
+            streamSpheres[stream_id + streamType].dispose();
+            delete streamSpheres[stream_id + streamType];
+            delete remoteVideoTracks[stream_id];
           }
           
         }
@@ -391,7 +377,6 @@
         
 
         document.querySelector('#stop-sendrecv1').addEventListener('click', async () => {//退室
-          NumberOfPartner = 0;
           await sendrecv1.disconnect();
           document.querySelector('#stream-videos').srcObject = null;
           document.querySelector('#stream-videos').innerHTML = null;
