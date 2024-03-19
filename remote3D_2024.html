@@ -292,6 +292,7 @@
             if (!remoteVideos.querySelector('#' + remoteVideoId)) {
               const remoteVideo = document.createElement('video');
               remoteVideo.id = remoteVideoId;
+              console.log('create child id: ', remoteVideo.id);
               remoteVideo.style.border = '1px solid red';
               remoteVideo.autoplay = true;
               remoteVideo.playsinline = true;
@@ -327,7 +328,7 @@
         
         function removeStreamVideo(stream_id, streamType){  //ローカル切断時処理
           const remoteVideo = document.querySelector('#stream-video-' + stream_id);
-          
+          console.log(document.querySelector('#stream-videos').children)
           for (let id in streamSpheres){
             console.log('sphere id: ', id);
             //streamSpheres[id].dispose();
