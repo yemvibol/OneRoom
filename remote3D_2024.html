@@ -226,17 +226,16 @@
 
           function removeVideo(conn){
             const stream = remoteVideoTracks[conn.connection_id];
-            
             if(!stream){
               console.warn('notify', 'stream not found', conn.connection_id);
               return;
             }
             stream.getTracks().forEach(track => track.stop());
             if(conn.metadata?.screen){
-              removeStreamVideo(conn.connection_id + 'screen');
+              removeStreamVideo(conn.connection_id, 'screen');
               shareScreenID = '';
             } else {
-              removeStreamVideo(conn.connection_id);
+              removeStreamVideo(conn.connection_id, conn.client_id);
               console.log('remove partner id:', conn.connection_id);
             }
             delete remoteVideoTracks[conn.connection_id];
@@ -328,7 +327,6 @@
           
           if (remoteVideo) {
             document.querySelector('#stream-videos').removeChild(remoteVideo);
-            //scene.removeMesh(streamSpheres[stream_id]);
             streamSpheres[stream_id + streamType].dispose();
             delete streamSpheres[stream_id + streamType];
             delete remoteVideoTracks[stream_id];
@@ -369,8 +367,6 @@
               logText += err;
             }
           );         
-            
-          
             
         });
 
