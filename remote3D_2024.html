@@ -355,7 +355,7 @@
               //console.log(localStream.id);
               localStream.getAudioTracks()[0].enabled = false;
               sendrecv1.connect(localStream);
-              addStreamVideo(sendrecv1.connectionId, localStream, clientId);
+              addStreamVideo(sendrecv1.connectionId, localStream, options.clientId);
               if(getUserMediaMock.state.isDummy){  //ダミー映像を流しているなら
                 isDummyMovie = true;
               }
@@ -374,7 +374,7 @@
           await sendrecv1.disconnect();
           document.querySelector('#stream-videos').srcObject = null;
           document.querySelector('#stream-videos').innerHTML = null;
-          removeStreamVideo(sendrecv1.connectionId, clientId);//remove local stream
+          removeStreamVideo(sendrecv1.connectionId, options.clientId);//remove local stream
           for (let id in streamSpheres){
             //console.log(id);
             streamSpheres[id].dispose();
