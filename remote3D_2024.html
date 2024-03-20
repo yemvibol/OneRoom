@@ -634,18 +634,20 @@
       });
 
         return scene;
-      } ;
+      }; 
       // Create scene.
 		  scene = createScene();
-		  scene.then(function (returnedScene) {
-			  sceneToRender = returnedScene;
-		  });
+		  //scene.then(function (returnedScene) {
+			//  sceneToRender = returnedScene;
+		  //});
+      //engine.runRenderLoop(function () {
+			//  if (sceneToRender) {
+			//	  sceneToRender.render();
+			//  }
+		  //});
       engine.runRenderLoop(function () {
-			  if (sceneToRender) {
-				  sceneToRender.render();
-			  }
-		  });
-
+        scene.render();
+      });
       
 
       // Handle browser resize.
