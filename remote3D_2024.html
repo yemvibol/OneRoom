@@ -86,10 +86,10 @@
       //const engine = createDefaultEngine(canvas);
       const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
       //********* Create scene and create XR experience. *********************************
-		  const createScene = async function() 
+		  const createScene = function() 
       {
         //  *** CAMERA  ***
-        var scene = new BABYLON.Scene(engine);
+        const scene = new BABYLON.Scene(engine);
         var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 100, 100), scene);
         // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
         var transTextSphere = BABYLON.Mesh.CreateSphere("TransTextSphere", 16, 1, scene);   //UI親となる見えないオブジェクト
