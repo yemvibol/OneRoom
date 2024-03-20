@@ -73,7 +73,7 @@
       var logText ="";
       let localStream = new MediaStream();
       // canvas DOM 要素を取得する***********************************************
-		  let canvas = document.getElementById('renderCanvas');
+		  const canvas = document.getElementById('renderCanvas');
 		  // Initialize Babylon.js variables.
 		  let	sceneToRender;     
 		  const createDefaultEngine = function (canvas) {
@@ -83,7 +83,8 @@
 			  });
       }
 
-      const engine = createDefaultEngine(canvas);
+      //const engine = createDefaultEngine(canvas);
+      const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
       //********* Create scene and create XR experience. *********************************
 		  const createScene = async function() 
       {
@@ -646,7 +647,7 @@
 			//  }
 		  //});
       engine.runRenderLoop(function () {
-        this.scene.render();
+        scene.render();
       });
       
 
