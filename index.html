@@ -31,7 +31,7 @@
 	<script>
         const canvas = document.getElementById("renderCanvas"); // Get the canvas element
         const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
-        const createScene = function () {
+        const createScene = async function () {
             // Creates a basic Babylon Scene object
             const scene = new BABYLON.Scene(engine);
             // Creates and positions a free camera
