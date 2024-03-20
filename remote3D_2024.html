@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+<html lang="ja">
   <head>
     <meta http-equiv="content-type" content="text/javascript; charset=UTF-8">
     <title>Remote 3D</title>
@@ -73,7 +73,7 @@
       var logText ="";
       let localStream = new MediaStream();
       // canvas DOM 要素を取得する***********************************************
-		  const canvas = document.getElementById('renderCanvas');
+		  let canvas = document.getElementById('renderCanvas');
 		  // Initialize Babylon.js variables.
 		  let	sceneToRender;     
 		  const createDefaultEngine = function (canvas) {
@@ -83,13 +83,12 @@
 			  });
       }
 
-      //const engine = createDefaultEngine(canvas);
-      const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+      const engine = createDefaultEngine(canvas);
       //********* Create scene and create XR experience. *********************************
-		  const createScene = function() 
+		  const createScene = async function() 
       {
         //  *** CAMERA  ***
-        const scene = new BABYLON.Scene(engine);
+        var scene = new BABYLON.Scene(engine);
         var light = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 100, 100), scene);
         // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
         var transTextSphere = BABYLON.Mesh.CreateSphere("TransTextSphere", 16, 1, scene);   //UI親となる見えないオブジェクト
@@ -635,26 +634,26 @@
       });
 
         return scene;
-      }; 
+      } 
       // Create scene.
-		  const scene = createScene();
-		  //scene.then(function (returnedScene) {
-			//  sceneToRender = returnedScene;
-		  //});
-      //engine.runRenderLoop(function () {
-			//  if (sceneToRender) {
-			//	  sceneToRender.render();
-			//  }
-		  //});
+		  scene = createScene();
+		  scene.then(function (returnedScene) {
+			  sceneToRender = returnedScene;
+		  });
       engine.runRenderLoop(function () {
-        scene.render();
-      });
+			  if (sceneToRender) {
+				  sceneToRender.render();
+			  }
+		  });
+
       
 
       // Handle browser resize.
 		  window.addEventListener('resize', function () {
 			  engine.resize();
 		  });
+
+      
 
       function mic_on_off_clicked() {
         if (document.getElementsByName('mic_on_off')[0].checked) {
