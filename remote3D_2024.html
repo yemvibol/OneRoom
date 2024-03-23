@@ -337,7 +337,7 @@
         document.querySelector('#start-sendrecv1').addEventListener('click', async () => {//入室
           // sendrecv1
           let audioStream, videoStream; // 音声とビデオのストリーム
-          navigator.mediaDevices.getUserMedia({ audio: {echoCancellation: false, noiseSuppression: true}})
+          navigator.mediaDevices.getUserMedia({ audio: {echoCancellation: true, noiseSuppression: true}})
             .then(function(stream) {
               audioStream = stream; // 音声ストリームを取得
               //ビデオだけmock機能を使う
