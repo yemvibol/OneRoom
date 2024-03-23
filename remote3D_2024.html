@@ -341,7 +341,7 @@
           localStream.getAudioTracks()[0].enabled = false;
           await sendrecv1.connect(localStream);
 	  addStreamVideo(sendrecv1.connectionId, localStream, options.clientId);
-
+	document.getElementById('#stream-video-' + sendrecv1.connectionId + options.clientId').muted = true;
 		
           //let audioStream, videoStream; // 音声とビデオのストリーム
           //navigator.mediaDevices.getUserMedia({ audio: {echoCancellation: true, noiseSuppression: true}})
