@@ -71,7 +71,7 @@
       var transText = "";
       //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
       var logText ="";
-      let localStream = new MediaStream();
+      //let localStream = new MediaStream();
       // canvas DOM 要素を取得する***********************************************
 		  let canvas = document.getElementById('renderCanvas');
 		  // Initialize Babylon.js variables.
@@ -82,7 +82,7 @@
 				  stencil: true
 			  });
       }
-
+      let localStream ;
       const engine = createDefaultEngine(canvas);
       //********* Create scene and create XR experience. *********************************
 		  const createScene = async function() 
