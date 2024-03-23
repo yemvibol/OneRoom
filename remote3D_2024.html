@@ -336,35 +336,42 @@
 
         document.querySelector('#start-sendrecv1').addEventListener('click', async () => {//入室
           // sendrecv1
-          let audioStream, videoStream; // 音声とビデオのストリーム
-          navigator.mediaDevices.getUserMedia({ audio: {echoCancellation: true, noiseSuppression: true}})
-            .then(function(stream) {
-              audioStream = stream; // 音声ストリームを取得
-              //ビデオだけmock機能を使う
-              window.getUserMediaMock = new GetUserMediaMock();
-              getUserMediaMock.fallbackMock();
-              return navigator.mediaDevices.getUserMedia({ video: true}); // ビデオストリームを取得するために次のPromiseを返す
-            })
-            .then(function(stream) {
-              videoStream = stream; // ビデオストリームを取得
-              // 音声とビデオのストリームを合成して1つのストリームを作成
+	  // sendrecv1
+          localStream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: false, noiseSuppression: true}, video: true});
+          localStream.getAudioTracks()[0].enabled = false;
+          await sendrecv1.connect(localStream);
+	  addStreamVideo(sendrecv1.connectionId, localStream, options.clientId);
 
-              audioStream.getAudioTracks().forEach(track => localStream.addTrack(track));
-              videoStream.getVideoTracks().forEach(track => localStream.addTrack(track));
-              // ここで合成したストリームを利用する
-              //console.log(localStream.id);
-              localStream.getAudioTracks()[0].enabled = false;
-              sendrecv1.connect(localStream);
-              addStreamVideo(sendrecv1.connectionId, localStream, options.clientId);
-              if(getUserMediaMock.state.isDummy){  //ダミー映像を流しているなら
-                isDummyMovie = true;
-              }
-            })
-            .catch(function(err) {
-              // エラーハンドリング
-              logText += err;
-            }
-          );         
+		
+          //let audioStream, videoStream; // 音声とビデオのストリーム
+          //navigator.mediaDevices.getUserMedia({ audio: {echoCancellation: true, noiseSuppression: true}})
+          //  .then(function(stream) {
+          //    audioStream = stream; // 音声ストリームを取得
+          //    //ビデオだけmock機能を使う
+          //    window.getUserMediaMock = new GetUserMediaMock();
+          //    getUserMediaMock.fallbackMock();
+          //    return navigator.mediaDevices.getUserMedia({ video: true}); // ビデオストリームを取得するために次のPromiseを返す
+          //  })
+          //  .then(function(stream) {
+          //    videoStream = stream; // ビデオストリームを取得
+          //    // 音声とビデオのストリームを合成して1つのストリームを作成
+
+          //    audioStream.getAudioTracks().forEach(track => localStream.addTrack(track));
+          //    videoStream.getVideoTracks().forEach(track => localStream.addTrack(track));
+          //    // ここで合成したストリームを利用する
+          //    //console.log(localStream.id);
+          //    localStream.getAudioTracks()[0].enabled = false;
+          //    sendrecv1.connect(localStream);
+          //    addStreamVideo(sendrecv1.connectionId, localStream, options.clientId);
+          //    if(getUserMediaMock.state.isDummy){  //ダミー映像を流しているなら
+          //      isDummyMovie = true;
+          //    }
+          //  })
+          //  .catch(function(err) {
+          //    // エラーハンドリング
+          //    logText += err;
+          //  }
+          //);         
             
         });
 
