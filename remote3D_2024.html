@@ -291,6 +291,9 @@
               remoteVideo.autoplay = true;
               remoteVideo.playsinline = true;
               remoteVideo.controls = true;
+	      if (stream_id_ == sendrecv1.connectionId){
+		      remoteVideo.muted = true;
+	      }
               remoteVideo.width = '640';
               remoteVideo.height = '480';
               remoteVideo.srcObject = stream;
@@ -341,7 +344,7 @@
           localStream.getAudioTracks()[0].enabled = false;
           await sendrecv1.connect(localStream);
 	  addStreamVideo(sendrecv1.connectionId, localStream, options.clientId);
-	document.getElementById('#stream-video-' + sendrecv1.connectionId + options.clientId').muted = true;
+	//document.getElementById('#stream-video-' + sendrecv1.connectionId + options.clientId).muted = true;
 		
           //let audioStream, videoStream; // 音声とビデオのストリーム
           //navigator.mediaDevices.getUserMedia({ audio: {echoCancellation: true, noiseSuppression: true}})
