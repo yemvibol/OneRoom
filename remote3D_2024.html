@@ -32,7 +32,7 @@
           <input type="radio" name="mic_on_off" onclick="mic_on_off_clicked()" checked style="width: 30px; height: 20px; position: relative; top: 4px; margin-left: 20;"><font size="5">mic off</font><br>
 
         </div>  
-        <div id="stream-videos" style="display: inline;"></div>
+        <div id="stream-videos" style="display: none;"></div>
         
       </div>
     </div>
@@ -258,13 +258,13 @@
             }
             else if(streamType == 'THISISREMOTE'){
               var planeOpts = {
-			          height: 7.2, 
-			          width: 9.6, 
+			          height: 3.6, 
+			          width: 4.8, 
 			          sideOrientation: BABYLON.Mesh.DOUBLESIDE
 	            };
               console.log('create plan remote stream id:', stream_id);
               streamSpheres[stream_id] = BABYLON.MeshBuilder.CreatePlane("plane", planeOpts, scene);
-              streamSpheres[stream_id].position =  new BABYLON.Vector3(0.0, cameraTarget.y + numP, 1.0);
+              streamSpheres[stream_id].position =  new BABYLON.Vector3(numP, cameraTarget.y, 1.0);
 	      numP += 5;
               streamSpheres[stream_id].rotation = new BABYLON.Vector3(-30.0, 0.0, 0.0);
               vScale = -1;
@@ -289,7 +289,7 @@
               const remoteVideo = document.createElement('video');
               remoteVideo.id = remoteVideoId;
               //console.log('create child id: ', remoteVideo.id);
-              remoteVideo.style.border = '1px solid red';
+              //remoteVideo.style.border = '1px solid red';
               remoteVideo.autoplay = true;
               remoteVideo.playsinline = true;
               remoteVideo.controls = true;
