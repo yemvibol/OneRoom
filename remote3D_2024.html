@@ -176,6 +176,7 @@
         var screen_radio = 1.0;
         var screen_height_radio = 1.0;
         var isDummyMovie = false;
+	var numP = 0;
 
         // SORA
         const sendrecv1 = sora.sendrecv(channelId, null, options);
@@ -263,8 +264,9 @@
 	            };
               console.log('create plan remote stream id:', stream_id);
               streamSpheres[stream_id] = BABYLON.MeshBuilder.CreatePlane("plane", planeOpts, scene);
-              streamSpheres[stream_id].position = screen_position;
-              streamSpheres[stream_id].rotation = screen_rotation;
+              streamSpheres[stream_id].position =  new BABYLON.Vector3(0.0, cameraTarget.y + numP, 1.0);
+	      numP += 5;
+              streamSpheres[stream_id].rotation = new BABYLON.Vector3(-30.0, 0.0, 0.0);
               vScale = -1;
               matAlpha = 1.0;              
             }
